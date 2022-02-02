@@ -1,1 +1,19 @@
-<p>welcome works!</p>
+<div class="container bg-light py-5">
+    <h1 class="display-5 fw-bold">Welcome to Quiz App</h1>
+    <p class="col-md-8 fs-8">This quiz will contain 9 questions. Each question holds 10 Points</p>
+    <h4>Rules: </h4>
+    <ol>
+        <li>Correct answer gives you 10 points</li>
+        <li>Incorrect answer gives -10 point</li>
+        <li>You have 60 second to answer the question</li>
+        <li>Page Refreshing resets the Quiz</li>
+    </ol>
+    <h1 class="text-center">All the Best</h1>
+    <div class="name col-md-4 my-3">
+        <label for="name">Enter your name: </label>
+        <input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" id='name'
+            [(ngModel)]="name">
+    </div>
+    <button type="button" class="btn btn-primary col-md-1" routerLink="/question"
+        [disabled]="!name.length">Start</button>
+</div>
