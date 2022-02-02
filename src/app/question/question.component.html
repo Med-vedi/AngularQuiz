@@ -6,14 +6,14 @@
             </div>
             <div class="quiz-header">
                 <h4>Angular & TypeScript Quiz</h4>
-                <span style="font-style: italic">Welcome User</span>
+                <span style="font-style: italic">Welcome {{name}}</span>
             </div>
         </div>
         <div class="d-flex justify-content-around py-3">
             <div class="score">
                 <h5>20 points</h5>
             </div>
-            <div class="question-remain"><span>Question 1 of 9</span></div>
+            <div class="question-remain"><span>Question {{currentQuestion+1}} of {{questionList.length}}</span></div>
             <div class="timer">
                 <h5>60 sec ⏱</h5>
             </div>
@@ -24,27 +24,22 @@
         </div>
         <div class="question">
             <div class="card">
-                <h3>What is your name?</h3>
+                <h3>{{questionList[currentQuestion]?.questionText}}</h3>
             </div>
         </div>
         <div class="option">
             <ol>
-                <li>
-                    <div class="card">Vasea</div>
+                <li *ngFor="let option of questionList[currentQuestion]?.options">
+                    <div class="card">{{option?.text}}</div>
                 </li>
-                <li>
-                    <div class="card">Vlad</div>
-                </li>
-                <li>
-                    <div class="card">Nazar</div>
-                </li>
+
             </ol>
         </div>
         <div class="d-flex justify-content-between">
-            <button class="btn">
+            <button [disabled]="currentQuestion === 0" class="btn" (click)="prev()">
                 <i class="fa text-primary fa-chevron-left fa-3x"></i></button>
             <button class="btn"><i class="fa fa-refresh fa-3x text-primary "></i></button>
-            <button class="btn">
+            <button [disabled]="currentQuestion+1 === questionList.length" class="btn" (click)="next()">
                 <i class="fa text-primary fa-chevron-right fa-3x"></i></button>
         </div>
     </div>

@@ -11,7 +11,8 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  log() {
+  startQuiz() {
+    localStorage.setItem('userName', this.name);
     console.log('====================================');
     console.log(this.name);
     console.log('====================================');
