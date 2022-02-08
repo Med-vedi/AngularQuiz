@@ -8,6 +8,7 @@ import { QuestionComponent } from './question/question.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ChandeBgDirective } from './chande-bg.directive';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     WelcomeComponent,
     QuestionComponent,
     HeaderComponent,
+    ChandeBgDirective,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

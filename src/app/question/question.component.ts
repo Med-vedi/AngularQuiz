@@ -22,10 +22,12 @@ export class QuestionComponent implements OnInit {
   correctAnswers: number = 0;
   incorrectAnswers: number = 0;
   btnIsDisabled = false;
+  isQuizCompleted: Boolean = false;
 
   answersObj = {};
 
   counter = 60;
+  progress: number = 0;
 
   interval$: any;
 
@@ -34,6 +36,7 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     this.name = localStorage.getItem('userName');
     this.getAllQuestions();
+    this.startCounter();
   }
 
   getAllQuestions() {
@@ -44,6 +47,7 @@ export class QuestionComponent implements OnInit {
 
   next() {
     this.currentQuestion++;
+    this.startCounter();
   }
 
   prev() {
@@ -53,7 +57,14 @@ export class QuestionComponent implements OnInit {
   handleAnswer(idx: number, correct: boolean = false) {
     this.btnIsDisabled = true;
     this.answersObj[idx] = correct;
+    this.handleProgressChange();
+    this.resetCounter();
+
     setTimeout(() => {
+      if (this.currentQuestion + 1 === this.questionList.length) {
+        this.stopCounter();
+        return (this.isQuizCompleted = true);
+      }
       this.currentQuestion++;
       this.btnIsDisabled = false;
     }, 500);
@@ -67,25 +78,24 @@ export class QuestionComponent implements OnInit {
     this.points -= 10;
   }
 
-  log() {
-    console.log('====================================');
-    console.log(this.answersObj);
-    console.log('====================================');
+  handleProgressChange() {
+    this.progress =
+      ((this.currentQuestion + 1) / this.questionList.length) * 100;
   }
 
   startCounter() {
-    this.interval$ = interval(1000).subscribe((val) => {
+    this.interval$ = interval(1000).subscribe(() => {
       this.counter--;
       if (this.counter === 0) {
         this.currentQuestion++;
         this.counter = 60;
-        this.points - +10;
       }
       setTimeout(() => {
         this.interval$.unsubscribe();
       }, 600000);
     });
   }
+
   stopCounter() {
     this.interval$.unsubscribe();
     this.counter = 0;
@@ -95,5 +105,15 @@ export class QuestionComponent implements OnInit {
     this.stopCounter();
     this.counter = 60;
     this.startCounter();
+    this.isQuizCompleted = false;
+  }
+
+  resetQuiz() {
+    this.resetCounter();
+    this.getAllQuestions();
+    this.currentQuestion = 0;
+    this.points = 0;
+    this.progress = 0;
+    this.counter = 60;
   }
 }
